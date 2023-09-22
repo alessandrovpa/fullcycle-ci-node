@@ -2,13 +2,16 @@ name: fullcycle-ci-node
 on:
   pull_request:
     branches:
-      - develop
+      - develop  
 jobs:
   check-application:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [18, 20]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ matrix.version }}
       - run: node index_test.mjs
